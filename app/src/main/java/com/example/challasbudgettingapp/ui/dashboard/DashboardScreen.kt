@@ -13,8 +13,16 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.challasbudgettingapp.data.repository.ExpenseRepository
+import com.example.challasbudgettingapp.data.repository.IncomeRepository
+import com.example.challasbudgettingapp.data.repository.UserRepository
 
 @Composable
 fun DashboardScreen(
@@ -23,13 +31,68 @@ fun DashboardScreen(
     onReports: () -> Unit,
     onSettings: () -> Unit
 ) {
+    val expenseRepository = remember {
+        ExpenseRepository()
+    }
+
+    val incomeRepository = remember {
+        IncomeRepository()
+    }
+
+    val userRepository = remember {
+        UserRepository()
+    }
+
+    var totalIncome by remember {
+        mutableDoubleStateOf(0.0)
+    }
+
+    var totalExpenses by remember {
+        mutableDoubleStateOf(0.0)
+    }
+
+    LaunchedEffect(Unit) {
+
+        // Test/load users
+        try {
+            userRepository.getUsers()
+            userRepository.getUser(1)
+        } catch (_: Exception) {
+            // Keep the dashboard running if the API is unavailable.
+        }
+
+        // Load expenses
+        try {
+            val expenses = expenseRepository.getExpenses()
+
+            totalExpenses = expenses.sumOf { expense ->
+                expense.amount
+            }
+
+        } catch (_: Exception) {
+            totalExpenses = 0.0
+        }
+
+        // Load income
+        try {
+            val incomes = incomeRepository.getIncome()
+
+            totalIncome = incomes.sumOf { income ->
+                income.amount
+            }
+
+        } catch (_: Exception) {
+            totalIncome = 0.0
+        }
+    }
+
+    val balance = totalIncome - totalExpenses
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(20.dp)
     ) {
-
 
         Text(
             text = "Challas Budget",
@@ -48,7 +111,6 @@ fun DashboardScreen(
             modifier = Modifier.height(24.dp)
         )
 
-
         Card(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -66,7 +128,7 @@ fun DashboardScreen(
                 )
 
                 Text(
-                    text = "R0.00",
+                    text = "R%.2f".format(balance),
                     style = MaterialTheme.typography.headlineLarge
                 )
             }
@@ -75,7 +137,6 @@ fun DashboardScreen(
         Spacer(
             modifier = Modifier.height(16.dp)
         )
-
 
         Card(
             modifier = Modifier.fillMaxWidth()
@@ -94,7 +155,7 @@ fun DashboardScreen(
                 )
 
                 Text(
-                    text = "R0.00",
+                    text = "R%.2f".format(totalIncome),
                     style = MaterialTheme.typography.headlineMedium
                 )
             }
@@ -103,7 +164,6 @@ fun DashboardScreen(
         Spacer(
             modifier = Modifier.height(20.dp)
         )
-
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -135,7 +195,6 @@ fun DashboardScreen(
             modifier = Modifier.height(10.dp)
         )
 
-
         Button(
             onClick = onReports,
             modifier = Modifier.fillMaxWidth()
@@ -149,7 +208,6 @@ fun DashboardScreen(
         Spacer(
             modifier = Modifier.height(10.dp)
         )
-
 
         Button(
             onClick = onSettings,

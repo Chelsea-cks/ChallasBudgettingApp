@@ -14,15 +14,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.challasbudgettingapp.data.model.Income
+import com.example.challasbudgettingapp.data.repository.IncomeRepository
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddIncomeScreen(
     onSaved: () -> Unit
 ) {
+    val incomeRepository = remember { IncomeRepository() }
+    val scope = rememberCoroutineScope()
+
     var amount by rememberSaveable { mutableStateOf("") }
     var source by rememberSaveable { mutableStateOf("") }
     var date by rememberSaveable { mutableStateOf("") }
@@ -82,7 +90,23 @@ fun AddIncomeScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = onSaved,
+            onClick = {
+                val parsedAmount = amount.toDoubleOrNull() ?: 0.0
+                val income = Income(
+                    userID = 1,
+                    source = source,
+                    amount = parsedAmount,
+                    date = date,
+                    notes = notes
+                )
+                scope.launch {
+                    try {
+                        incomeRepository.createIncome(income)
+                    } catch (_: Exception) {
+                    }
+                    onSaved()
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Save Income")

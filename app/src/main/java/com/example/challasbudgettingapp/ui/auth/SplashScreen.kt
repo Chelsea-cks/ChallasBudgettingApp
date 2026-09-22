@@ -13,7 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.challasbudgettingapp.ui.data.auth.AuthRepository
+import com.example.challasbudgettingapp.data.auth.AuthRepository
 import kotlinx.coroutines.delay
 
 @Composable

@@ -18,13 +18,20 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.challasbudgettingapp.ui.data.auth.AuthRepository
+import com.example.challasbudgettingapp.data.auth.AuthRepository
+import com.example.challasbudgettingapp.data.model.User
+import com.example.challasbudgettingapp.data.repository.UserRepository
+import kotlinx.coroutines.launch
+import android.util.Log
+
 
 @Composable
 fun RegisterScreen(
@@ -32,7 +39,9 @@ fun RegisterScreen(
     onBackToLogin: () -> Unit
 ) {
 
-    val authRepository = AuthRepository()
+    val authRepository = remember { AuthRepository() }
+    val userRepository = remember { UserRepository() }
+    val scope = rememberCoroutineScope()
 
     var fullName by rememberSaveable {
         mutableStateOf("")
@@ -282,10 +291,37 @@ fun RegisterScreen(
                             password = password,
 
                             onSuccess = {
+                                scope.launch {
+                                    try {
+                                        val user = User(
+                                            fullName = fullName.trim(),
+                                            email = email.trim()
+                                        )
 
-                                isLoading = false
+                                        userRepository.createUser(user)
 
-                                onRegisterSuccess()
+                                        Log.d(
+                                            "ChallasBudgetRegister",
+                                            "User saved successfully to SQL Server"
+                                        )
+
+                                        isLoading = false
+                                        onRegisterSuccess()
+
+                                    } catch (e: Exception) {
+
+                                        Log.e(
+                                            "ChallasBudgetRegister",
+                                            "Firebase account created but database save failed",
+                                            e
+                                        )
+
+                                        isLoading = false
+
+                                        errorMessage =
+                                            "Account created, but your details could not be saved to the database."
+                                    }
+                                }
                             },
 
                             onError = { error ->

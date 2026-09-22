@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.challasbudgettingapp.ui.data.auth.AuthRepository
+import com.example.challasbudgettingapp.data.auth.AuthRepository
 
 @Composable
 fun LoginScreen(
