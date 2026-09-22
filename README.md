@@ -108,3 +108,23 @@ Planned features for the final version include:
 **Platform:** Android
 **Backend:** ASP.NET Core Web API
 **Database:** Microsoft SQL Server
+
+## References
+
+- Android Developers. (2026). Fundamentals of testing Android apps.
+  https://developer.android.com/training/testing/fundamentals
+
+- Android Developers. (2026). Test your Compose layout.
+  https://developer.android.com/develop/ui/compose/testing
+
+- GitHub. (2026). GitHub Actions documentation.
+  https://docs.github.com/en/actions
+
+- Microsoft. (2026). ASP.NET Core documentation.
+  https://learn.microsoft.com/aspnet/core/
+
+- Microsoft. (2026). Entity Framework Core documentation.
+  https://learn.microsoft.com/ef/core/
+
+- Firebase. (2026). Firebase Authentication documentation.
+  https://firebase.google.com/docs/auth
