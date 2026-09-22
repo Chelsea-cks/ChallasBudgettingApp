@@ -128,3 +128,6 @@ Planned features for the final version include:
 
 - Firebase. (2026). Firebase Authentication documentation.
   https://firebase.google.com/docs/auth
+  
+Youtube Links:https://youtu.be/eImHcE4pjZ4 & https://youtube.com/shorts/EjqMEcXN7gs?feature=share
+Github link for API: https://github.com/Chelsea-cks/ChallasBudgetApi
