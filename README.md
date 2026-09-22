@@ -1,59 +1,110 @@
-Challas Budget
+# Challas Budget
 
-Take Control of Every Rand.
+**Take Control of Every Rand.**
 
-Challas Budget is an Android personal budgeting application designed to help users manage their income and expenses in a simple, organised and user-friendly way. The application allows users to securely register and log in, record income and expenses, view financial information through the dashboard, access reports and customise application settings.
+Challas Budget is an Android budgeting application designed to help users manage their personal income and expenses in a simple and organised way.
 
-The application was developed as part of the PROG6212/APPR6312 mobile application project using Kotlin and Jetpack Compose.
+## Features
 
+* User registration and login
+* Firebase Authentication
+* Password reset and logout
+* Dashboard with income, expenses and balance
+* Add and manage expenses
+* Add and manage income
+* Financial reports
+* Currency settings
+* Dark mode
+* Notification settings
+* RESTful API integration
 
-1. Project Purpose
+## Technologies
 
-The purpose of Challas Budget is to provide users with a convenient digital solution for managing their personal finances.
+* **Kotlin** – Android development
+* **Jetpack Compose & Material 3** – User interface
+* **Firebase Authentication** – User authentication
+* **Retrofit** – REST API communication
+* **ASP.NET Core Web API** – Backend
+* **Entity Framework Core** – Database access
+* **Microsoft SQL Server** – Database
+* **GitHub** – Version control
+* **GitHub Actions** – Automated testing and builds
 
-Traditional budgeting can become time-consuming when users need to manually record transactions or calculate their remaining balance. Challas Budget provides a centralised application where users can record financial transactions and view their financial information through a simple interface.
+## Architecture
 
-The application focuses on:
+```text
+Android App
+    ↓
+Retrofit
+    ↓
+ASP.NET Core REST API
+    ↓
+Entity Framework Core
+    ↓
+SQL Server
+```
 
-* Recording expenses
-* Recording income
-* Viewing the current financial balance
-* Managing user accounts
-* Providing a simple dashboard
-* Allowing users to customise application settings
-* Connecting the Android application to a RESTful API
-* Storing application data in a SQL Server database
+Firebase Authentication is used to securely manage user credentials.
 
+## API
 
-2. Main Features
+The application communicates with the backend using RESTful endpoints for:
 
-User Authentication
-
-Users can:
-
-* Register a new account
-* Log in using their email and password
-* Request a password reset
-* Log out of the application
-
-Firebase Authentication is used to manage user credentials securely.
-
-Dashboard
-
-The dashboard provides an overview of the user's financial information, including:
-
-* Current balance
-* Income
+* Users
 * Expenses
-* Quick access to expense and income functions
-* Access to reports
-* Access to settings
+* Income
 
-Expense Management
+Expense and income records can be created, retrieved, updated and deleted through the API.
 
-Users can record expenses by providing information such as:
+## Database
 
-* Amount
-* Category
-* Date
-* Notes
+The SQL Server database contains:
+
+* **Users**
+* **Expenses**
+* **Income**
+
+Financial records are linked to users using `UserID`.
+
+## Security & Validation
+
+Firebase Authentication manages user passwords securely. Passwords are not stored as plaintext in the application's database.
+
+The application validates user input, including email addresses, required fields and transaction amounts.
+
+## Testing
+
+The application is tested to ensure that:
+
+* Registration and login work correctly
+* Invalid input is handled safely
+* Expenses and income can be recorded
+* API communication works
+* Database operations work correctly
+* Application navigation works correctly
+
+## GitHub
+
+GitHub is used to manage and track the project's source code and development progress.
+
+GitHub Actions is used to automate the application's build and testing process.
+
+## Future Enhancements
+
+Planned features for the final version include:
+
+* Google Sign-In
+* Offline mode and synchronisation
+* Push notifications
+* Multilingual support
+* Additional South African languages
+* Play Store preparation
+
+## Author
+
+**Chelsea**
+
+**Project:** Challas Budget
+**Platform:** Android
+**Backend:** ASP.NET Core Web API
+**Database:** Microsoft SQL Server
