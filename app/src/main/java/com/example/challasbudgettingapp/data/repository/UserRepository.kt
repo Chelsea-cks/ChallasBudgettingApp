@@ -16,6 +16,9 @@ class UserRepository(
     suspend fun getUser(id: Int): User {
         return apiService.getUser(id)
     }
+    suspend fun getUserByEmail(email: String): User {
+        return apiService.getUserByEmail(email)
+    }
 
     suspend fun createUser(user: User): User {
 

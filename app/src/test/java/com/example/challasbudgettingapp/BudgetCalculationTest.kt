@@ -1,56 +1,24 @@
 package com.example.challasbudgettingapp
 
+import com.example.challasbudgettingapp.util.BudgetMath
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+/** Tests the real budget calculations used by the dashboard and savings goals. */
 class BudgetCalculationTest {
 
-    @Test
-    fun calculateBalance_incomeMinusExpenses() {
+    @Test fun balance_isIncomeMinusExpenses() =
+        assertEquals(3000.0, BudgetMath.balance(5000.0, 2000.0), 0.01)
 
-        val income = 5000.0
-        val expenses = 2000.0
+    @Test fun balance_canGoNegative() =
+        assertEquals(-500.0, BudgetMath.balance(1500.0, 2000.0), 0.01)
 
-        val balance = income - expenses
+    @Test fun goalProgress_halfway() =
+        assertEquals(50.0, BudgetMath.goalProgress(500.0, 1000.0), 0.01)
 
-        assertEquals(3000.0, balance, 0.01)
-    }
+    @Test fun goalProgress_isCappedAt100() =
+        assertEquals(100.0, BudgetMath.goalProgress(2000.0, 1000.0), 0.01)
 
-    @Test
-    fun calculateBalance_whenExpensesGreaterThanIncome() {
-
-        val income = 2000.0
-        val expenses = 2500.0
-
-        val balance = income - expenses
-
-        assertEquals(-500.0, balance, 0.01)
-    }
-
-    @Test
-    fun calculateTotalExpenses() {
-
-        val expenses = listOf(
-            100.0,
-            250.0,
-            150.0
-        )
-
-        val total = expenses.sum()
-
-        assertEquals(500.0, total, 0.01)
-    }
-
-    @Test
-    fun calculateTotalIncome() {
-
-        val income = listOf(
-            5000.0,
-            1000.0
-        )
-
-        val total = income.sum()
-
-        assertEquals(6000.0, total, 0.01)
-    }
+    @Test fun goalProgress_zeroTargetIsSafe() =
+        assertEquals(0.0, BudgetMath.goalProgress(100.0, 0.0), 0.01)
 }

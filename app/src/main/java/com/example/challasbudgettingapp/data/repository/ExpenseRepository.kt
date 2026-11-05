@@ -1,8 +1,10 @@
+
 package com.example.challasbudgettingapp.data.repository
 
 import com.example.challasbudgettingapp.data.api.ApiService
 import com.example.challasbudgettingapp.data.api.RetrofitClient
 import com.example.challasbudgettingapp.data.model.Expense
+import okhttp3.MultipartBody
 
 class ExpenseRepository(
     private val apiService: ApiService = RetrofitClient.apiService
@@ -25,6 +27,26 @@ class ExpenseRepository(
         }
 
         throw Exception("Server error: ${response.code()}")
+    }
+
+    @Suppress("unused")
+    suspend fun uploadReceipt(
+        image: MultipartBody.Part
+    ): String {
+        return uploadAzureReceipt(image)
+    }
+
+    suspend fun uploadAzureReceipt(
+        image: MultipartBody.Part
+    ): String {
+        val response = apiService.uploadAzureReceipt(image)
+
+        if (response.isSuccessful) {
+            return response.body()?.imageUrl
+                ?: throw Exception("Azure receipt upload returned an empty URL.")
+        }
+
+        throw Exception("Azure receipt upload failed: ${response.code()}")
     }
 
     suspend fun updateExpense(

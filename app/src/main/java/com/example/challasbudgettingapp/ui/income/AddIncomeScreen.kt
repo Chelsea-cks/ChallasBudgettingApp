@@ -19,22 +19,29 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import android.util.Log
+import com.example.challasbudgettingapp.util.Validators
 import com.example.challasbudgettingapp.data.model.Income
+import com.example.challasbudgettingapp.data.offline.OfflineSyncManager
 import com.example.challasbudgettingapp.data.repository.IncomeRepository
 import kotlinx.coroutines.launch
 
 @Composable
 fun AddIncomeScreen(
+    userID: Int,
     onSaved: () -> Unit
 ) {
     val incomeRepository = remember { IncomeRepository() }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     var amount by rememberSaveable { mutableStateOf("") }
     var source by rememberSaveable { mutableStateOf("") }
     var date by rememberSaveable { mutableStateOf("") }
     var notes by rememberSaveable { mutableStateOf("") }
+    var errorMessage by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -89,22 +96,41 @@ fun AddIncomeScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        if (errorMessage.isNotEmpty()) {
+            Text(text = errorMessage, color = MaterialTheme.colorScheme.error)
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
         Button(
             onClick = {
-                val parsedAmount = amount.toDoubleOrNull() ?: 0.0
-                val income = Income(
-                    userID = 1,
-                    source = source,
-                    amount = parsedAmount,
-                    date = date,
-                    notes = notes
-                )
-                scope.launch {
-                    try {
-                        incomeRepository.createIncome(income)
-                    } catch (_: Exception) {
+                // Validate input so bad data never reaches the API (no crashes).
+                val parsedAmount = Validators.parsePositiveAmount(amount)
+                when {
+                    userID <= 0 -> errorMessage = "Your session is invalid. Please log in again."
+                    parsedAmount == null -> errorMessage = "Enter an amount greater than 0."
+                    source.isBlank() -> errorMessage = "Please enter an income source."
+                    !Validators.isValidDate(date) -> errorMessage = "Enter the date as yyyy-MM-dd."
+                    else -> {
+                        errorMessage = ""
+                        val income = Income(
+                            userID = userID,
+                            source = source.trim(),
+                            amount = parsedAmount,
+                            date = date.trim(),
+                            notes = notes
+                        )
+                        scope.launch {
+                            try {
+                                incomeRepository.createIncome(income)
+                                Log.d("AddIncome", "Income saved online")
+                            } catch (e: Exception) {
+                                // No connection or server error: queue for later sync.
+                                Log.w("AddIncome", "Saving offline: ${e.message}")
+                                OfflineSyncManager(context).saveOfflineIncome(income)
+                            }
+                            onSaved()
+                        }
                     }
-                    onSaved()
                 }
             },
             modifier = Modifier.fillMaxWidth()

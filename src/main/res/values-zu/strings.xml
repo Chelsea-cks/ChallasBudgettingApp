@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Challas Budget</string>
+    <string name="welcome_back">Siyakwamukela Futhi</string>
+    <string name="sign_in_sub">Ngena kwi-Challas Budget</string>
+    <string name="email">I-Imeyili</string>
+    <string name="password">Iphasiwedi</string>
+    <string name="forgot_password">Ukhohlwe iphasiwedi?</string>
+    <string name="login">Ngena</string>
+    <string name="create_account">Dala i-akhawunti</string>
+    <string name="google_sso">Ngena nge-Google (SSO)</string>
+
+    <string name="settings">Izilungiselelo</string>
+    <string name="settings_subtitle">Yenza kube ngokwakho okuhlangenwe nakho kwakho kwi-Challas Budget.</string>
+    <string name="appearance">Imbonakalo</string>
+    <string name="dark_mode">Imodi Emnyama</string>
+    <string name="dark_mode_enabled">Imodi emnyama ivuliwe</string>
+    <string name="light_mode_enabled">Imodi ekhanyayo ivuliwe</string>
+
+    <string name="currency">Imali</string>
+    <string name="current_currency">Imali yamanje: %1$s</string>
+    <string name="change_currency">Shintsha Imali</string>
+
+    <string name="language">Ulimi</string>
+    <string name="current_language">Ulimi lwamanje: %1$s</string>
+    <string name="select_language">Khetha Ulimi</string>
+    <string name="english">IsiNgisi</string>
+    <string name="isizulu">IsiZulu</string>
+    <string name="afrikaans">IsiBhunu</string>
+
+    <string name="notifications">Izaziso</string>
+    <string name="notifications_enabled">Izaziso zesabelomali zivuliwe</string>
+    <string name="notifications_disabled">Izaziso zesabelomali zivaliwe</string>
+
+    <string name="about_app">Mayelana ne-Challas Budget</string>
+    <string name="about_desc">I-Challas Budget isiza abasebenzisi ukulandelela i-incomes, izindleko kanye nenqubekelaphambili yezezimali yenyanga.</string>
+    <string name="version">Inguqulo 1.0</string>
+    <string name="motto">Thatha Ukulawula Kwazo Zonke Izinhlamvu ZeRandi.</string>
+    <string name="logout">Phuma</string>
+    <string name="offline_sync">Imininingwane engaxhumekile ivumelaniswe ngokugcwele!</string>
+    <string name="savings_goals">Izinjongo Zokonga</string>
+    <string name="view_reports">Buka Imibiko</string>
+    <string name="current_balance">Ibhalansi Yamanje</string>
+    <string name="monthly_budget">Isabelomali Senyanga</string>
+    <string name="expense">Inkambo</string>
+    <string name="income">Imali Engenayo</string>
+</resources>

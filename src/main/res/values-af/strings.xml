@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Challas Budget</string>
+    <string name="welcome_back">Welkom Terug</string>
+    <string name="sign_in_sub">Meld aan by Challas Budget</string>
+    <string name="email">E-pos</string>
+    <string name="password">Wagwoord</string>
+    <string name="forgot_password">Wagwoord vergeet?</string>
+    <string name="login">Teken In</string>
+    <string name="create_account">Skep \'n rekening</string>
+    <string name="google_sso">Teken in met Google (SSO)</string>
+
+    <string name="settings">Instellings</string>
+    <string name="settings_subtitle">Pas jou Challas Budget ervaring aan.</string>
+    <string name="appearance">Voorkoms</string>
+    <string name="dark_mode">Donker Modus</string>
+    <string name="dark_mode_enabled">Donker tema is geaktiveer</string>
+    <string name="light_mode_enabled">Ligte tema is geaktiveer</string>
+
+    <string name="currency">Geldeenheid</string>
+    <string name="current_currency">Huidige geldeenheid: %1$s</string>
+    <string name="change_currency">Verander Geldeenheid</string>
+
+    <string name="language">Taal</string>
+    <string name="current_language">Huidige taal: %1$s</string>
+    <string name="select_language">Kies Taal</string>
+    <string name="english">Engels</string>
+    <string name="isizulu">isiZulu</string>
+    <string name="afrikaans">Afrikaans</string>
+
+    <string name="notifications">Kennisgewings</string>
+    <string name="notifications_enabled">Begrotingskennisgewings is geaktiveer</string>
+    <string name="notifications_disabled">Begrotingskennisgewings is gedeaktiveer</string>
+
+    <string name="about_app">Oor Challas Budget</string>
+    <string name="about_desc">Challas Budget help gebruikers om inkomste, uitgawes en maandelikse finansiële vordering te naspoor.</string>
+    <string name="version">Weergawe 1.0</string>
+    <string name="motto">Neem Beheer van Elke Rand.</string>
+    <string name="logout">Teken Uit</string>
+    <string name="offline_sync">Offline data suksesvol gesinkroniseer!</string>
+    <string name="savings_goals">Spaardoelwitte</string>
+    <string name="view_reports">Bekyk Verslae</string>
+    <string name="current_balance">Huidige Saldo</string>
+    <string name="monthly_budget">Maandelikse Begroting</string>
+    <string name="expense">Uitgawe</string>
+    <string name="income">Inkomste</string>
+</resources>

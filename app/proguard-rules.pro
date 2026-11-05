@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# Gson/Retrofit models are reflected on at runtime - keep them when minified
+-keep class com.example.challasbudgettingapp.data.model.** { *; }
+-keep class com.example.challasbudgettingapp.data.api.ReceiptUploadResponse { *; }
+-keepattributes Signature, *Annotation*

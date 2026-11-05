@@ -1,6 +1,8 @@
+
 package com.example.challasbudgettingapp.ui.auth
 
 import android.util.Patterns
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,12 +32,10 @@ import com.example.challasbudgettingapp.data.auth.AuthRepository
 import com.example.challasbudgettingapp.data.model.User
 import com.example.challasbudgettingapp.data.repository.UserRepository
 import kotlinx.coroutines.launch
-import android.util.Log
-
 
 @Composable
 fun RegisterScreen(
-    onRegisterSuccess: () -> Unit,
+    onRegisterSuccess: (Int) -> Unit,
     onBackToLogin: () -> Unit
 ) {
 
@@ -291,22 +291,31 @@ fun RegisterScreen(
                             password = password,
 
                             onSuccess = {
+
                                 scope.launch {
+
                                     try {
+
                                         val user = User(
                                             fullName = fullName.trim(),
                                             email = email.trim()
                                         )
 
-                                        userRepository.createUser(user)
+                                        // Save the user to SQL Server.
+                                        val savedUser =
+                                            userRepository.createUser(user)
 
                                         Log.d(
                                             "ChallasBudgetRegister",
-                                            "User saved successfully to SQL Server"
+                                            "User saved successfully to SQL Server. ID: ${savedUser.userID}"
                                         )
 
                                         isLoading = false
-                                        onRegisterSuccess()
+
+                                        // Pass the SQL Server user ID to navigation.
+                                        onRegisterSuccess(
+                                            savedUser.userID
+                                        )
 
                                     } catch (e: Exception) {
 
@@ -338,6 +347,7 @@ fun RegisterScreen(
             modifier = Modifier.fillMaxWidth(),
 
             enabled = !isLoading
+
         ) {
 
             if (isLoading) {

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1035430015542",
-    "project_id": "challas-budget",
-    "storage_bucket": "challas-budget.firebasestorage.app"
+    "project_number": "1098499863108",
+    "project_id": "challas-budget-android",
+    "storage_bucket": "challas-budget-android.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1035430015542:android:22f2444100cc1d81a1de97",
+        "mobilesdk_app_id": "1:1098499863108:android:e644cf93dff81e439b8211",
         "android_client_info": {
           "package_name": "com.example.challasbudgettingapp"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD45ItqFX-cWT-7pffAyQ2UuLUbKILmKwg"
+          "current_key": "AIzaSyC-zXjxkzha-p9KLK2n985GayO637_sWvE"
         }
       ],
       "services": {

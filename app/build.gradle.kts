@@ -1,5 +1,11 @@
-
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
+
+// Release signing values live in keystore.properties (git-ignored), never in source control.
+val keystoreProps = Properties().apply {
+    val f = rootProject.file("keystore.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
 
 plugins {
     alias(libs.plugins.android.application)
@@ -14,20 +20,34 @@ android {
 
     defaultConfig {
         applicationId = "com.example.challasbudgettingapp"
-
         minSdk = 26
         targetSdk = 37
 
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "3.0"
 
         testInstrumentationRunner =
             "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            if (keystoreProps.containsKey("storeFile")) {
+                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            if (keystoreProps.containsKey("storeFile")) {
+                signingConfig = signingConfigs.getByName("release")
+            }
 
             proguardFiles(
                 getDefaultProguardFile(
@@ -55,11 +75,11 @@ kotlin {
 }
 
 dependencies {
-
     // Android
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation("androidx.appcompat:appcompat:1.7.0")
 
     // Jetpack Compose
     implementation(platform(libs.androidx.compose.bom))
@@ -74,7 +94,13 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.messaging)
     implementation(libs.kotlinx.coroutines.play.services)
+
+    // Google single sign-on (Credential Manager)
+    implementation("androidx.credentials:credentials:1.5.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.5.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
 
     // Retrofit
     implementation(libs.retrofit)

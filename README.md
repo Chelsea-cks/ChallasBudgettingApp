@@ -1,114 +1,150 @@
-# Challas Budget
+# Challas Budget – Personal Finance & Budgeting App
 
-**Take Control of Every Rand.**
+**"Take Control of Every Rand."**
 
-Challas Budget is an Android budgeting application designed to help users manage their personal income and expenses in a simple and organised way.
+Challas Budget is a full-featured Android personal finance management application designed to empower users to track incomes, manage expenses, set savings goals, and visualize financial growth cleanly and intuitively. Built using modern Android architecture, Jetpack Compose, Firebase, and REST API integration with Azure Blob Storage.
 
-## Features
+---
 
-* User registration and login
-* Firebase Authentication
-* Password reset and logout
-* Dashboard with income, expenses and balance
-* Add and manage expenses
-* Add and manage income
-* Financial reports
-* Currency settings
-* Dark mode
-* Notification settings
-* RESTful API integration
+## 📽️ Demonstration Video
 
-## Technologies
+* **Video Link:** [YouTube Demonstration Video (Unlisted)](https://www.youtube.com/watch?v=YOUR_VIDEO_LINK_HERE)
+* *Note:* The demonstration video showcases full app functionality running on a physical Android mobile device with voiceover explanation, database/API backend verification, Firebase auth, FCM notifications, offline sync, and multi-language support.
 
-* **Kotlin** – Android development
-* **Jetpack Compose & Material 3** – User interface
-* **Firebase Authentication** – User authentication
-* **Retrofit** – REST API communication
-* **ASP.NET Core Web API** – Backend
-* **Entity Framework Core** – Database access
-* **Microsoft SQL Server** – Database
-* **GitHub** – Version control
-* **GitHub Actions** – Automated testing and builds
+---
 
-## Architecture
+## 🚀 Key Features & Innovations
+
+### 1. 🔐 Authentication & Single Sign-On (SSO)
+* Secure registration and login powered by **Firebase Authentication**.
+* Encrypted password protection managed securely by Firebase auth services.
+* **Single Sign-On (SSO):** Quick one-tap Google SSO sign-in capability.
+* Password reset and secure session management.
+
+### 2. 🌐 REST API & Backend Integration
+* Connected to an **ASP.NET Core RESTful Web API** with Entity Framework Core and Microsoft SQL Server.
+* Full CRUD operations for Users, Expenses, Incomes, and Savings Goals.
+
+### 3. ☁️ Azure Blob Storage (Receipt Uploads)
+* Integrated **Azure Blob Storage** for uploading and retrieving high-resolution receipt images.
+* Powered by `Coil` image loader for fast asynchronously rendered image previews.
+
+### 4. 📴 Offline Mode with Synchronization
+* Users can log expenses and incomes even without an active internet connection.
+* Offline data is stored locally (`OfflineSyncManager`) and automatically synchronized with the REST API once network connectivity is restored.
+
+### 5. 🔔 Real-Time Push Notifications (FCM)
+* Integrated **Firebase Cloud Messaging (FCM)** for instant push notifications and budget reminders (`BudgetQuestMessagingService`).
+* Full Android 13+ (`POST_NOTIFICATIONS`) runtime permission consent handling.
+
+### 6. 🇿🇦 Multi-Language Support (South African Languages)
+* Full multilingual support for South African languages:
+  * 🇬🇧 **English** (`values/strings.xml`)
+  * 🇿🇦 **isiZulu** (`values-zu/strings.xml`)
+  * 🇿🇦 **Afrikaans** (`values-af/strings.xml`)
+* Dynamic language switching in Settings.
+
+### 7. 🎨 Appearance & User Experience
+* Custom **Dark Mode / Light Mode** switching using Compose `Material3` color schemes.
+* Currency selection (ZAR `R` / USD `$`).
+* Responsive layouts with clear user feedback and invalid input handling.
+
+---
+
+## 🏗️ Architecture & Technology Stack
 
 ```text
-Android App
-    ↓
-Retrofit
-    ↓
-ASP.NET Core REST API
-    ↓
-Entity Framework Core
-    ↓
-SQL Server
+[ Android App (Jetpack Compose + Kotlin) ]
+      │
+      ├──> Firebase Auth (Authentication & SSO)
+      ├──> Firebase Messaging (Real-time FCM Notifications)
+      ├──> Local Offline Cache (OfflineSyncManager)
+      │
+      └──> Retrofit 2 REST Client
+                │
+                ├──> Azure Blob Storage (Receipt Images)
+                └──> ASP.NET Core Web API (Entity Framework Core)
+                          │
+                          └──> Microsoft SQL Server
 ```
 
-Firebase Authentication is used to securely manage user credentials.
+---
 
-## API
+## ⚙️ Automated Testing & GitHub Actions (CI/CD)
 
-The application communicates with the backend using RESTful endpoints for:
+Continuous Integration is set up using **GitHub Actions** located at `.github/workflows/build.yml`.
 
-* Users
-* Expenses
-* Income
+### Automated Workflow Pipeline:
+1. **Trigger:** Fires automatically on every `push` or `pull_request` to `main` / `master`.
+2. **Environment:** Ubuntu-latest runner with JDK 17 and Android SDK.
+3. **Tasks Executed:**
+   * `./gradlew test` – Executes automated unit tests for budget calculation and input validation logic.
+   * `./gradlew assembleDebug` – Compiles the Android debug APK to ensure no build errors exist across environments.
 
-Expense and income records can be created, retrieved, updated and deleted through the API.
+---
 
-## Database
+## 📝 Release Notes (PoE Progress Update)
 
-The SQL Server database contains:
+### Version 1.0 (Final PoE Release)
+* **New:** Azure Blob Storage receipt upload integration.
+* **New:** Single Sign-On (SSO) support via Google & Firebase Auth.
+* **New:** Real-time push notification system using Firebase Cloud Messaging (FCM).
+* **New:** Offline storage and automatic cloud synchronization manager.
+* **New:** Multi-language support (English, isiZulu, Afrikaans).
+* **Fix:** Resolved Dark Mode color scheme application across Jetpack Compose screens.
+* **Fix:** Corrected notification permission consent prompt on Android 13+ (API 33+).
+* **Fix:** Fixed Firebase Auth session persistence on user logout.
+* **Test:** Added automated JUnit test suites for input validation and budget balance calculations.
 
-* **Users**
-* **Expenses**
-* **Income**
+---
 
-Financial records are linked to users using `UserID`.
+## 📱 Google Play Store Publication Preparation
 
-## Security & Validation
+The application is configured and ready for release on the Google Play Store:
+* **Package Name:** `com.example.challasbudgettingapp`
+* **Target SDK:** API 35/37 (Android 15)
+* **Min SDK:** API 26 (Android 8.0)
+* **Build Tasks:** Gradle `assembleRelease` & `bundleRelease` configured for signed APK / Android App Bundle generation.
+* **Assets:** Custom app launcher icons, high-density adaptive drawables, and Play Store graphics.
 
-Firebase Authentication manages user passwords securely. Passwords are not stored as plaintext in the application's database.
+---
 
-The application validates user input, including email addresses, required fields and transaction amounts.
+## 🤖 AI Tools Utilization Write-Up (Max 500 Words)
 
-## Testing
+During the development of Challas Budget, artificial intelligence tools—specifically Android Studio AI Assistant and Large Language Models (LLMs)—were utilized as supportive development aids. 
 
-The application is tested to ensure that:
+### Areas of AI Assistance:
+1. **Code Architecture & Refactoring:** AI tools provided guidance on structuring Kotlin coroutines with Retrofit REST clients, implementing clean Jetpack Compose state management (`rememberSaveable`), and configuring FCM (`FirebaseMessagingService`) and notification channels according to modern Android standards.
+2. **Debugging & Error Diagnostics:** AI was consulted to diagnose Jetpack Compose theme inheritance issues (wrapping custom `ChallasBudgettingAppTheme` around `NavHost`), as well as resolving Android 13+ `POST_NOTIFICATIONS` runtime permission handling.
+3. **Multi-Language Translations:** AI assisted in providing initial South African language string translations (isiZulu and Afrikaans) for UI labels in `strings.xml`.
+4. **CI/CD Workflow Configuration:** AI provided template references for creating the GitHub Actions YAML workflow (`.github/workflows/build.yml`) to ensure smooth automated build and testing execution on GitHub runners.
 
-* Registration and login work correctly
-* Invalid input is handled safely
-* Expenses and income can be recorded
-* API communication works
-* Database operations work correctly
-* Application navigation works correctly
+All AI-generated snippets and suggestions were reviewed, modified, integrated, and verified by the author to ensure code quality, consistency, and alignment with project guidelines.
 
-## GitHub
+---
 
-GitHub is used to manage and track the project's source code and development progress.
+## 👤 Author
 
-GitHub Actions is used to automate the application's build and testing process.
+* **Student / Author:** Chelsea
+* **Project:** Challas Budget
+* **Institution:** IIE (The Independent Institute of Education)
+* **Year:** 2026
 
-## Future Enhancements
+---
 
-Planned features for the final version include:
+## Release Notes
+See [RELEASE_NOTES.md](RELEASE_NOTES.md) for everything added since the prototype.
 
-* Google Sign-In
-* Offline mode and synchronisation
-* Push notifications
-* Multilingual support
-* Additional South African languages
-* Play Store preparation
-* 
-AI was used to understand how to implement firebase, and azure blob storage
-## Author
+## Building a signed release APK
+1. Create a keystore: `keytool -genkey -v -keystore challas.jks -keyalias challas -keyalg RSA -keysize 2048 -validity 10000`
+2. Create `keystore.properties` in the project root (it is git-ignored):
+   ```
+   storeFile=challas.jks
+   storePassword=YOUR_PASSWORD
+   keyAlias=challas
+   keyPassword=YOUR_PASSWORD
+   ```
+3. Run `./gradlew assembleRelease` (APK) or `./gradlew bundleRelease` (Play Store AAB).
 
-**Chelsea**
-
-**Project:** Challas Budget
-**Platform:** Android
-**Backend:** ASP.NET Core Web API
-**Database:** Microsoft SQL Server
-YOUTUBE
-https://youtube.com/shorts/TBveMCwrivQ?feature=share
-
+## AI usage declaration
+(Add your own max-500-word write-up here describing how AI tools were used and cited.)

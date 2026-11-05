@@ -1,3 +1,4 @@
+
 package com.example.challasbudgettingapp.ui.dashboard
 
 import androidx.compose.foundation.layout.Arrangement
@@ -14,34 +15,31 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.res.stringResource
+import com.example.challasbudgettingapp.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import android.util.Log
+import com.example.challasbudgettingapp.data.offline.OfflineSyncManager
 import com.example.challasbudgettingapp.data.repository.ExpenseRepository
 import com.example.challasbudgettingapp.data.repository.IncomeRepository
-import com.example.challasbudgettingapp.data.repository.UserRepository
+import kotlinx.coroutines.CancellationException
+import java.util.Locale
 
 @Composable
 fun DashboardScreen(
     onAddExpense: () -> Unit,
     onAddIncome: () -> Unit,
     onReports: () -> Unit,
-    onSettings: () -> Unit
+    onSettings: () -> Unit,
+    onSavingsGoals: () -> Unit
 ) {
-    val expenseRepository = remember {
-        ExpenseRepository()
-    }
-
-    val incomeRepository = remember {
-        IncomeRepository()
-    }
-
-    val userRepository = remember {
-        UserRepository()
-    }
+    val context = LocalContext.current
 
     var totalIncome by remember {
         mutableDoubleStateOf(0.0)
@@ -52,37 +50,33 @@ fun DashboardScreen(
     }
 
     LaunchedEffect(Unit) {
-
-        // Test/load users
+        // Synchronise any saved offline data.
         try {
-            userRepository.getUsers()
-            userRepository.getUser(1)
-        } catch (_: Exception) {
-            // Keep the dashboard running if the API is unavailable.
+            OfflineSyncManager(context).syncPendingData()
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Log.e("BudgetQuestDashboard", "Offline sync failed", e)
         }
 
-        // Load expenses
+        // Load expenses.
         try {
-            val expenses = expenseRepository.getExpenses()
-
-            totalExpenses = expenses.sumOf { expense ->
-                expense.amount
-            }
-
-        } catch (_: Exception) {
-            totalExpenses = 0.0
+            val expenses = ExpenseRepository().getExpenses()
+            totalExpenses = expenses.sumOf { it.amount }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Log.e("BudgetQuestDashboard", "Could not load expenses", e)
         }
 
-        // Load income
+        // Load income.
         try {
-            val incomes = incomeRepository.getIncome()
-
-            totalIncome = incomes.sumOf { income ->
-                income.amount
-            }
-
-        } catch (_: Exception) {
-            totalIncome = 0.0
+            val incomes = IncomeRepository().getIncome()
+            totalIncome = incomes.sumOf { it.amount }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Log.e("BudgetQuestDashboard", "Could not load income", e)
         }
     }
 
@@ -93,130 +87,91 @@ fun DashboardScreen(
             .fillMaxSize()
             .padding(20.dp)
     ) {
-
         Text(
             text = "Challas Budget",
             style = MaterialTheme.typography.headlineMedium
         )
 
-        Spacer(
-            modifier = Modifier.height(6.dp)
-        )
+        Spacer(modifier = Modifier.height(6.dp))
 
-        Text(
-            text = "Take Control of Every Rand"
-        )
+        Text(text = stringResource(R.string.motto))
 
-        Spacer(
-            modifier = Modifier.height(24.dp)
-        )
+        Spacer(modifier = Modifier.height(24.dp))
 
-        Card(
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                Text(text = stringResource(R.string.current_balance))
 
-            Column(
-                modifier = Modifier.padding(20.dp)
-            ) {
+                Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Current Balance"
-                )
-
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
-
-                Text(
-                    text = "R%.2f".format(balance),
+                    text = "R${String.format(Locale.getDefault(), "%.2f", balance)}",
                     style = MaterialTheme.typography.headlineLarge
                 )
             }
         }
 
-        Spacer(
-            modifier = Modifier.height(16.dp)
-        )
+        Spacer(modifier = Modifier.height(16.dp))
 
-        Card(
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                Text(text = stringResource(R.string.monthly_budget))
 
-            Column(
-                modifier = Modifier.padding(20.dp)
-            ) {
+                Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Monthly Budget"
-                )
-
-                Spacer(
-                    modifier = Modifier.height(8.dp)
-                )
-
-                Text(
-                    text = "R%.2f".format(totalIncome),
+                    text = "R${String.format(Locale.getDefault(), "%.2f", totalIncome)}",
                     style = MaterialTheme.typography.headlineMedium
                 )
             }
         }
 
-        Spacer(
-            modifier = Modifier.height(20.dp)
-        )
+        Spacer(modifier = Modifier.height(20.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-
             Button(
                 onClick = onAddExpense,
                 modifier = Modifier.weight(1f)
             ) {
-
-                Text(
-                    text = "Expense"
-                )
+                Text(text = stringResource(R.string.expense))
             }
 
             Button(
                 onClick = onAddIncome,
                 modifier = Modifier.weight(1f)
             ) {
-
-                Text(
-                    text = "Income"
-                )
+                Text(text = stringResource(R.string.income))
             }
         }
 
-        Spacer(
-            modifier = Modifier.height(10.dp)
-        )
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Button(
+            onClick = onSavingsGoals,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = stringResource(R.string.savings_goals))
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
 
         Button(
             onClick = onReports,
             modifier = Modifier.fillMaxWidth()
         ) {
-
-            Text(
-                text = "View Reports"
-            )
+            Text(text = stringResource(R.string.view_reports))
         }
 
-        Spacer(
-            modifier = Modifier.height(10.dp)
-        )
+        Spacer(modifier = Modifier.height(10.dp))
 
         Button(
             onClick = onSettings,
             modifier = Modifier.fillMaxWidth()
         ) {
-
-            Text(
-                text = "Settings"
-            )
+            Text(text = stringResource(R.string.settings))
         }
     }
 }
