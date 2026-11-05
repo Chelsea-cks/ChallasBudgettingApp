@@ -108,3 +108,4 @@ Planned features for the final version include:
 **Platform:** Android
 **Backend:** ASP.NET Core Web API
 **Database:** Microsoft SQL Server
+YOUTUBE: https://youtube.com/shorts/_RhtGmIxhdo?feature=share
