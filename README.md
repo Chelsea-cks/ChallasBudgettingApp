@@ -109,5 +109,6 @@ AI was used to understand how to implement firebase, and azure blob storage
 **Platform:** Android
 **Backend:** ASP.NET Core Web API
 **Database:** Microsoft SQL Server
-YOUTUBE: https://youtube.com/shorts/_RhtGmIxhdo?feature=share
+YOUTUBE
+https://youtube.com/shorts/TBveMCwrivQ?feature=share
 
