@@ -99,7 +99,8 @@ Planned features for the final version include:
 * Multilingual support
 * Additional South African languages
 * Play Store preparation
-
+* 
+AI was used to understand how to implement firebase, and azure blob storage
 ## Author
 
 **Chelsea**
@@ -109,3 +110,4 @@ Planned features for the final version include:
 **Backend:** ASP.NET Core Web API
 **Database:** Microsoft SQL Server
 YOUTUBE: https://youtube.com/shorts/_RhtGmIxhdo?feature=share
+
