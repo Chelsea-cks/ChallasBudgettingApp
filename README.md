@@ -6,34 +6,34 @@ Challas Budget is a full-featured Android personal finance management applicatio
 
 ---
 
-## 📽️ Demonstration Video
+## Demonstration Video
 
-* **Video Link:** [YouTube Demonstration Video (Unlisted)](https://www.youtube.com/watch?v=YOUR_VIDEO_LINK_HERE)
+* **Video Link:** [YouTube Demonstration Video (Unlisted)](https://youtube.com/shorts/TBveMCwrivQ?feature=share)
 * *Note:* The demonstration video showcases full app functionality running on a physical Android mobile device with voiceover explanation, database/API backend verification, Firebase auth, FCM notifications, offline sync, and multi-language support.
 
 ---
 
-## 🚀 Key Features & Innovations
+##  Key Features & Innovations
 
-### 1. 🔐 Authentication & Single Sign-On (SSO)
+### 1. Authentication & Single Sign-On (SSO)
 * Secure registration and login powered by **Firebase Authentication**.
 * Encrypted password protection managed securely by Firebase auth services.
 * **Single Sign-On (SSO):** Quick one-tap Google SSO sign-in capability.
 * Password reset and secure session management.
 
-### 2. 🌐 REST API & Backend Integration
+### 2. REST API & Backend Integration
 * Connected to an **ASP.NET Core RESTful Web API** with Entity Framework Core and Microsoft SQL Server.
 * Full CRUD operations for Users, Expenses, Incomes, and Savings Goals.
 
-### 3. ☁️ Azure Blob Storage (Receipt Uploads)
+### 3.  Azure Blob Storage (Receipt Uploads)
 * Integrated **Azure Blob Storage** for uploading and retrieving high-resolution receipt images.
 * Powered by `Coil` image loader for fast asynchronously rendered image previews.
 
-### 4. 📴 Offline Mode with Synchronization
+### 4.  Offline Mode with Synchronization
 * Users can log expenses and incomes even without an active internet connection.
 * Offline data is stored locally (`OfflineSyncManager`) and automatically synchronized with the REST API once network connectivity is restored.
 
-### 5. 🔔 Real-Time Push Notifications (FCM)
+### 5.  Real-Time Push Notifications (FCM)
 * Integrated **Firebase Cloud Messaging (FCM)** for instant push notifications and budget reminders (`BudgetQuestMessagingService`).
 * Full Android 13+ (`POST_NOTIFICATIONS`) runtime permission consent handling.
 
@@ -44,14 +44,14 @@ Challas Budget is a full-featured Android personal finance management applicatio
   * 🇿🇦 **Afrikaans** (`values-af/strings.xml`)
 * Dynamic language switching in Settings.
 
-### 7. 🎨 Appearance & User Experience
+### 7.  Appearance & User Experience
 * Custom **Dark Mode / Light Mode** switching using Compose `Material3` color schemes.
 * Currency selection (ZAR `R` / USD `$`).
 * Responsive layouts with clear user feedback and invalid input handling.
 
 ---
 
-## 🏗️ Architecture & Technology Stack
+##  Architecture & Technology Stack
 
 ```text
 [ Android App (Jetpack Compose + Kotlin) ]
@@ -70,7 +70,7 @@ Challas Budget is a full-featured Android personal finance management applicatio
 
 ---
 
-## ⚙️ Automated Testing & GitHub Actions (CI/CD)
+##  Automated Testing & GitHub Actions (CI/CD)
 
 Continuous Integration is set up using **GitHub Actions** located at `.github/workflows/build.yml`.
 
@@ -83,7 +83,7 @@ Continuous Integration is set up using **GitHub Actions** located at `.github/wo
 
 ---
 
-## 📝 Release Notes (PoE Progress Update)
+##  Release Notes (PoE Progress Update)
 
 ### Version 1.0 (Final PoE Release)
 * **New:** Azure Blob Storage receipt upload integration.
@@ -98,7 +98,7 @@ Continuous Integration is set up using **GitHub Actions** located at `.github/wo
 
 ---
 
-## 📱 Google Play Store Publication Preparation
+##  Google Play Store Publication Preparation
 
 The application is configured and ready for release on the Google Play Store:
 * **Package Name:** `com.example.challasbudgettingapp`
@@ -109,7 +109,7 @@ The application is configured and ready for release on the Google Play Store:
 
 ---
 
-## 🤖 AI Tools Utilization Write-Up (Max 500 Words)
+##  AI Tools Utilization Write-Up (Max 500 Words)
 
 During the development of Challas Budget, artificial intelligence tools—specifically Android Studio AI Assistant and Large Language Models (LLMs)—were utilized as supportive development aids. 
 
@@ -123,7 +123,7 @@ All AI-generated snippets and suggestions were reviewed, modified, integrated, a
 
 ---
 
-## 👤 Author
+##  Author
 
 * **Student / Author:** Chelsea
 * **Project:** Challas Budget
@@ -132,19 +132,6 @@ All AI-generated snippets and suggestions were reviewed, modified, integrated, a
 
 ---
 
-## Release Notes
-See [RELEASE_NOTES.md](RELEASE_NOTES.md) for everything added since the prototype.
-
-## Building a signed release APK
-1. Create a keystore: `keytool -genkey -v -keystore challas.jks -keyalias challas -keyalg RSA -keysize 2048 -validity 10000`
-2. Create `keystore.properties` in the project root (it is git-ignored):
-   ```
-   storeFile=challas.jks
-   storePassword=YOUR_PASSWORD
-   keyAlias=challas
-   keyPassword=YOUR_PASSWORD
-   ```
-3. Run `./gradlew assembleRelease` (APK) or `./gradlew bundleRelease` (Play Store AAB).
 
 ## AI usage declaration
-(Add your own max-500-word write-up here describing how AI tools were used and cited.)
+AI was used to understand how to implement firebase. AI was consulated with the implementation of the azure storage, the SSO.
